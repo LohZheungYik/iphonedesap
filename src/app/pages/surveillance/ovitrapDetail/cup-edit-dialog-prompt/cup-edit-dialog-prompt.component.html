@@ -1,0 +1,216 @@
+<nb-card style="height: 70%;margin-top: 20%;">
+    <nb-card-header>
+        <table style="width: 100%;">
+            <tr>
+                <td style="text-align: left;">Edit Cup</td>
+                <td style="text-align: right;">
+                    <ion-button size='small' fill='clear' color="primary" (click)="takePicture()">
+                        Analyze Cup
+                        <ion-icon slot="end" name="md-camera" style="font-size: 20px;"></ion-icon>
+                    </ion-button>
+                </td>
+                <td style="text-align: right;">
+                    <ion-button size='small' fill='clear' color="dark" (click)="getLatLong()">
+                        Get GPS Location
+                        <ion-icon slot="end" name="md-locate" style="font-size: 20px;"></ion-icon>
+                    </ion-button>
+                </td>
+            </tr>
+        </table>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="">
+            <form (ngSubmit)="submit()" #form="ngForm">
+                <div *ngIf="showMessages.error && errors && errors.length > 0 && !submitted" class="alert alert-danger"
+                    role="alert">
+                    <div><strong>ERROR!</strong></div>
+                    <div *ngFor="let error of errors">{{ error }}</div>
+                </div>
+                <div class="form-group row">
+                    <label for="cupNo" class="col-sm-3 col-form-label">Cup No</label>
+                    <div class="col-sm-9">
+                        <input disabled type="number" name="cupNo" #cupNo="ngModel" [(ngModel)]="cup.no"
+                            class="form-control" id="cupNo" [class.form-control-danger]="cupNo.invalid && cupNo.touched"
+                            min="1" autofocus required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="address" class="col-sm-3 col-form-label">Cup Address</label>
+                    <div class="col-sm-9">
+                        <input id="address" class="form-control" name='address' [(ngModel)]=" cup.address"
+                            #address="ngModel" [class.form-control-danger]="address.invalid && address.touched"
+                            autofocus required>
+                        <small class="form-text error"
+                            *ngIf="address.invalid && address.touched && address.errors?.required">
+                            Cup Address is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="placement" class="col-sm-3 col-form-label">Cup Placement</label>
+                    <div class="col-sm-9">
+                        <select id="placement" class="form-control" [(ngModel)]="cup.door" name='placement'
+                            #placement="ngModel" [class.form-control-danger]="placement.invalid && placement.touched"
+                            autofocus required style="width:300px">
+                            <option [ngValue]="1">Outdoor</option>
+                            <option [ngValue]="2">Indoor</option>
+                            <option [ngValue]="3">Semi-Indoor</option>
+
+                        </select>
+
+                        <small class="form-text error"
+                            *ngIf="placement.invalid && placement.touched && placement.errors?.required">
+                            Cup Placement is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="marker" class="col-sm-3 col-form-label">Cup Marker</label>
+                    <div class="col-sm-9">
+
+                        <ng-select id="marker" class="form-control custom" name='marker' #marker="ngModel"
+                            [class.form-control-danger]="marker.invalid && marker.touched" autofocusrequired
+                            style="width:300px" [items]="markers" bindLabel="name" bindValue="id"
+                            [(ngModel)]="cup.marker">
+                        </ng-select>
+
+                        <small class="form-text error"
+                            *ngIf="marker.invalid && marker.touched && marker.errors?.required">
+                            Cup Marker is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="markerName" class="col-sm-3 col-form-label">New Marker Name</label>
+                    <div class="col-sm-9">
+                        <input [disabled]="cup.marker != 0" id="markerName" class="form-control" name='markerName'
+                            [(ngModel)]="newMarker.name" #markerName="ngModel"
+                            [class.form-control-danger]="markerName.invalid && markerName.touched" autofocus
+                            [required]="cup.marker == 0">
+                        <small class="form-text error"
+                            *ngIf="markerName.invalid && markerName.touched && markerName.errors?.required">
+                            New Marker value is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="detail" class="col-sm-3 col-form-label">Marker Details</label>
+                    <div class="col-sm-9">
+                        <input id="detail" class="form-control" name='detail' [(ngModel)]="cup.markerdetails"
+                            #detail="ngModel" [class.form-control-danger]="detail.invalid && detail.touched" autofocus>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="latitude" class="col-sm-3 col-form-label">Cup Latitude (GPS Y)</label>
+                    <div class="col-sm-9">
+                        <input id="latitude" class="form-control" name='latitude' [(ngModel)]=" cup.gpsy"
+                            #latitude="ngModel" [class.form-control-danger]="latitude.invalid && latitude.touched"
+                            autofocus required type='number' min='-90' max='90'>
+                        <small class="form-text error"
+                            *ngIf="latitude.invalid && latitude.touched && latitude.errors?.required">
+                            Cup Latitude is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="longitude" class="col-sm-3 col-form-label">Cup Longitude (GPS X)</label>
+                    <div class="col-sm-9">
+                        <input id="longitude" class="form-control" name='longitude' [(ngModel)]=" cup.gpsx"
+                            #longitude="ngModel" [class.form-control-danger]="longitude.invalid && longitude.touched"
+                            autofocus type='number' min='-180' max='180' required>
+                        <small class="form-text error"
+                            *ngIf="longitude.invalid && longitude.touched && longitude.errors?.required">
+                            Cup Longitude is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="citizenName" class="col-sm-3 col-form-label">Citizen Name</label>
+                    <div class="col-sm-9">
+                        <input id="citizenName" class="form-control" name='citizenName' [(ngModel)]="cup.citizen_name"
+                            #citizenName="ngModel"
+                            [class.form-control-danger]="citizenName.invalid && citizenName.touched" autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="citizenTel" class="col-sm-3 col-form-label">Citizen Tel No</label>
+                    <div class="col-sm-9">
+                        <input id="citizenTel" minlength="11" maxlength="12" class="form-control" name='citizenTel'
+                            [(ngModel)]="cup.citizen_telno" #citizenTel="ngModel"
+                            [class.form-control-danger]="citizenTel.invalid && citizenTel.touched" autofocus>
+                    </div>
+                    <small class="form-text error" *ngIf="citizenTel.invalid && citizenTel.touched">
+                        The length of Citizen Tel No is between 11 and 12 number
+                    </small>
+                </div>
+
+                <div class="form-group row">
+                    <label for="egg" class="col-sm-3 col-form-label">Egg No</label>
+                    <div class="col-sm-9">
+                        <input type="number" id="egg" class="form-control" name='egg' [(ngModel)]="cup.egg"
+                            #egg="ngModel" [class.form-control-danger]="egg.invalid && egg.touched" autofocus required>
+                        <small class="form-text error" *ngIf="egg.invalid && egg.touched && egg.errors?.required">
+                            Egg No is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="larvae" class="col-sm-3 col-form-label">Larvae No</label>
+                    <div class="col-sm-9">
+                        <input type="number" id="larvae" class="form-control" name='larvae' [(ngModel)]=" cup.larvae"
+                            #larvae="ngModel" [class.form-control-danger]="larvae.invalid && larvae.touched" autofocus
+                            required>
+                        <small class="form-text error"
+                            *ngIf="larvae.invalid && larvae.touched && larvae.errors?.required">
+                            Larvae No is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="status" class="col-sm-3 col-form-label">Cup Status</label>
+                    <div class="col-sm-9">
+                        <select id="status" class="form-control" [(ngModel)]="cup.status" name='status'
+                            #status="ngModel" [class.form-control-danger]="status.invalid && status.touched" autofocus
+                            required style="width:300px">
+                            <option [ngValue]="0">Installed</option>
+                            <option [ngValue]="1">Positive</option>
+                            <option [ngValue]="2">Negative</option>
+                            <option [ngValue]="3">Lost/Missing</option>
+                            <option [ngValue]="4">Broken/Fault</option>
+                            <option [ngValue]="5">Collected</option>
+
+                        </select>
+
+                        <small class="form-text error"
+                            *ngIf="status.invalid && status.touched && status.errors?.required">
+                            Cup Placement is required!
+                        </small>
+                    </div>
+                </div>
+
+
+                <div class="form-group row" style="justify-content: center;">
+                    <div>
+                        <button [disabled]="submitted|| !form.valid" nbButton status="success" type="submit"
+                            [class.btn-pulse]="submitted">Save</button>
+                    </div>
+                    <div>
+                        <button nbButton status="primary" (click)="cancel()">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nb-card-body>
+</nb-card>

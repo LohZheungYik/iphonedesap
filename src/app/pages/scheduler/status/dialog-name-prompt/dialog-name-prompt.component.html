@@ -1,0 +1,20 @@
+<nb-card>
+  <nb-card-header>Dag's Detail</nb-card-header>
+  <nb-card-body>
+    <div>
+      <p>Dag ID: {{dag_id}}</p>
+      <p>Execution Date: {{dag_status.execution_date}}</p>
+      <p>Dag Status: {{dag_status.status}}</p>
+    </div>
+    <br><br>
+    <div>
+      Task List:
+      <ul>
+        <li *ngFor="let task of task_status.task_blocks">{{task.task_id}} : {{task.state}}</li>
+      </ul>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton status="danget" (click)="cancel()">Cancel</button>
+  </nb-card-footer>
+</nb-card>

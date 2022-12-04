@@ -1,0 +1,156 @@
+<ion-content style="height:50px;opacity: 0.1;position: absolute;z-index:1">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+</ion-content>
+<nb-card>
+    <nb-card-header>
+        <h2>Mosquito Home Detail Information</h2>
+    </nb-card-header>
+
+    <nb-card-body>
+        <nb-tabset>
+            <nb-tab tabTitle="Mosquito Home Detail" style="margin-top:16px">
+                <div class="col-md-6" style="margin: auto;">
+                    <form (ngSubmit)="submit()">
+                        <div *ngIf="showMessages.error && errors && errors.length > 0 && !submitted"
+                            class="alert alert-danger" role="alert">
+                            <div><strong>ERROR!</strong></div>
+                            <div *ngFor="let error of errors">{{ error }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="locality" class="col-sm-3 col-form-label">Locality</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="locality" #locality="ngModel" [(ngModel)]="ovitrap.location"
+                                    placeholder="{{default.location}}" class="form-control" id="locality"
+                                    [class.form-control-danger]="locality.invalid && locality.touched" autofocus
+                                    [required]="getConfigValue('forms.validation.username.required')">
+                                <small class="form-text error"
+                                    *ngIf="locality.invalid && locality.touched && locality.errors?.required">
+                                    Locality Name is required!
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="timeinstall" class="col-sm-3 col-form-label">Date Mosquito Home Install</label>
+                            <div class="col-sm-9">
+                                <input id="timeinstall" class="form-control" name='timeinstall'
+                                    [(ngModel)]=" ovitrap.timeinstall" #timeinstall="ngModel"
+                                    placeholder="{{default.timeinstall}}" [nbDatepicker]="timeinstall"
+                                    [class.form-control-danger]="timeinstall.invalid && timeinstall.touched" autofocus
+                                    [required]="getConfigValue('forms.validation.username.required')">
+                                <nb-datepicker #timeinstall (dateChange)="handleDateChange($event,'timeinstall')">
+                                </nb-datepicker>
+                                <small class="form-text error"
+                                    *ngIf="timeinstall.invalid && timeinstall.touched && timeinstall.errors?.required">
+                                    Date Mosquito Home Install is required!
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="timeremove" class="col-sm-3 col-form-label">Date Mosquito Home Remove</label>
+                            <div class="col-sm-9">
+                                <input id="timeremove" class="form-control" name='timeremove'
+                                    [(ngModel)]=" ovitrap.timeremove" #timeremove="ngModel"
+                                    placeholder="{{default.timeremove}}" [nbDatepicker]="timeremove"
+                                    [class.form-control-danger]="timeremove.invalid && timeremove.touched" autofocus>
+                                <nb-datepicker #timeremove (dateChange)="handleDateChange($event,'timeremove')">
+                                </nb-datepicker>
+                                <small class="form-text error"
+                                    *ngIf="timeremove.invalid && timeremove.touched && timeremove.errors?.required">
+                                    Date Mosquito Home Remove is required!
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="weekepidinstall" class="col-sm-3 col-form-label">Week Epid Install</label>
+                            <div class="col-sm-9">
+                                <input disabled type="text" name="weekepidinstall" #weekepidinstall="ngModel"
+                                    [(ngModel)]="ovitrap.weekepidinstall" placeholder="{{default.weekepidinstall}}"
+                                    class="form-control" id="weekepidinstall"
+                                    [class.form-control-danger]="weekepidinstall.invalid && weekepidinstall.touched"
+                                    autofocus [required]="getConfigValue('forms.validation.username.required')">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="weekepidremove" class="col-sm-3 col-form-label">Week Epid Remove</label>
+                            <div class="col-sm-9">
+                                <input disabled type="text" name="weekepidremove" #weekepidremove="ngModel"
+                                    [(ngModel)]="ovitrap.weekepidremove" placeholder="{{default.weekepidremove}}"
+                                    class="form-control" id="weekepidremove"
+                                    [class.form-control-danger]="weekepidremove.invalid && weekepidremove.touched"
+                                    autofocus [required]="getConfigValue('forms.validation.username.required')">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row" style="justify-content: center;">
+                            <div>
+                                <button [disabled]="submitted" nbButton status="success"
+                                    [class.btn-pulse]="submitted">Update</button>
+                            </div>
+                            <!-- <div>
+                                <button nbButton status="primary" (click)="cancel()">Cancel</button>
+                            </div> -->
+                        </div>
+                    </form>
+                </div>
+            </nb-tab>
+            <nb-tab tabTitle="Cup Operation " style="margin-top:16px">
+                <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDeleteClick($event)"
+                    (edit)="onEditClick($event)" (create)="onCreateClick($event)">
+                </ng2-smart-table>
+            </nb-tab>
+
+            <nb-tab tabTitle="Cup Analysis " style="margin-top:16px">
+                <table class="table table-striped table-bordered table-hover" style="text-align: center">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="font-size: 16px">Result</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Total Egg</th>
+                            <td>{{analysis.egg}}</td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">Total Larvae</th>
+                            <td>{{analysis.larvae}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total Cup Installed</th>
+                            <td>{{analysis.install}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total Cup Collected</th>
+                            <td>{{analysis.collect}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total Cup Lost</th>
+                            <td>{{analysis.lost}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total Cup Broken</th>
+                            <td>{{analysis.broken}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total Positive Cup</th>
+                            <td>{{analysis.positive}}</td>
+                        </tr>
+                        <tr style="font-size: 20px">
+                            <th scope="row" style="font-weight: bold">Mosquito Home Index (OI %)</th>
+                            <td>{{analysis.index}} %</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </nb-tab>
+        </nb-tabset>
+    </nb-card-body>
+</nb-card>

@@ -1,0 +1,54 @@
+<ion-content style="height:50px;opacity: 0.1;position: absolute;z-index:1">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+</ion-content>
+<nb-card accent="info">
+    <nb-card-header>
+        <h2>Historical Mosquito Home Map</h2>
+    </nb-card-header>
+
+    <nb-card-body class="inline-form-card">
+        <p style="padding-left: 1em;"><b>Filter Option: </b></p>
+        <form (ngSubmit)="displayMarkers()" style="padding: 0em 1em;" class="form-inline">
+            <select style="width:300px;" (change)="onSelectClick($event.target.value)" [(ngModel)]="ovitrap.locality"
+                class="form-control" name='locality' placeholder="Select Locality">
+                <option [ngValue]="">Select Locality</option>
+                <option *ngFor="let item of items;" [ngValue]="item">{{item}}</option>
+            </select>
+
+            <select *ngIf="ovitrap.display_date == true" class="form-control" [(ngModel)]="ovitrap.install_date"
+                name='installDate' placeholder="Select Install Date">
+                <option [ngValue]="">Select Install Date</option>
+                <option *ngFor="let item of dates;" [ngValue]="item">{{item}}</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <br>
+        <p style="padding-left: 1em;"><b>Display Option: </b></p>
+        <div style="padding: 0em 1em;" class="form-inline">
+            <select style="width:250px;" [(ngModel)]="displayType" (change)="onEditClick($event.target.value)"
+                class="form-control" name='displayType' placeholder="Select Marker Display Type">
+                <option [ngValue]="">Select Marker Display Type</option>
+                <option *ngFor="let type of types;" [ngValue]="type">{{type}}</option>
+            </select>
+            <select style="width:250px;" [(ngModel)]="displayRadiusType" (change)="onRadiusClick($event.target.value)"
+                class="form-control" name='displayRadiusType' placeholder="Select Radius Display Type">
+                <option [ngValue]="">Select Radius Display Type</option>
+                <option *ngFor="let type of rtypes;" [ngValue]="type">{{type}}</option>
+            </select>
+        </div>
+        <br>
+        <div>
+            <h4 style="padding-left: 1em;text-align: center;"><b>Mosquito Home Index: {{analysis.index}} %</b></h4>
+        </div>
+
+    </nb-card-body>
+
+    <nb-card-body>
+
+        <div id="leafletMap" leaflet [leafletOptions]="options" [leafletLayersControl]="layersControl"
+            (leafletMapReady)="onMapReady($event)" [leafletLayers]="layers"></div>
+    </nb-card-body>
+</nb-card>

@@ -1,0 +1,55 @@
+<nb-card>
+    <nb-card-header>Add New Mosquito Home Sentinel</nb-card-header>
+    <nb-card-body>
+        <div class="col-md-100">
+            <form (ngSubmit)="submit()" #form="ngForm">
+                <div *ngIf="showMessages.error && errors && errors.length > 0 && !submitted" class="alert alert-danger" role="alert">
+                    <div><strong>ERROR!</strong></div>
+                    <div *ngFor="let error of errors">{{ error }}</div>
+                </div>
+                <div class="form-group row">
+                    <label for="locality" class="col-sm-3 col-form-label">Locality</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="locality" #locality="ngModel" [(ngModel)]="ovitrap.location" placeholder="{{default.location}}" class="form-control" id="locality" [class.form-control-danger]="locality.invalid && locality.touched" autofocus [required]="getConfigValue('forms.validation.username.required')">
+                        <small class="form-text error" *ngIf="locality.invalid && locality.touched && locality.errors?.required">
+                            Locality Name is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="timeinstall" class="col-sm-3 col-form-label">Date Mosquito Home Install</label>
+                    <div class="col-sm-9">
+                        <input id="timeinstall" class="form-control" name='timeinstall' [(ngModel)]=" ovitrap.timeinstall" #timeinstall="ngModel" placeholder="{{default.timeinstall}}" [nbDatepicker]="timeinstall" [class.form-control-danger]="timeinstall.invalid && timeinstall.touched"
+                            autofocus [required]="getConfigValue('forms.validation.username.required')">
+                        <nb-datepicker #timeinstall></nb-datepicker>
+                        <small class="form-text error" *ngIf="timeinstall.invalid && timeinstall.touched && timeinstall.errors?.required">
+                            Date Mosquito Home Install is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="timeremove" class="col-sm-3 col-form-label">Date Mosquito Home Remove</label>
+                    <div class="col-sm-9">
+                        <input id="timeremove" class="form-control" name='timeremove' [(ngModel)]=" ovitrap.timeremove" #timeremove="ngModel" placeholder="{{default.timeremove}}" [nbDatepicker]="timeremove" [class.form-control-danger]="timeremove.invalid && timeremove.touched"
+                            autofocus>
+                        <nb-datepicker #timeremove></nb-datepicker>
+                        <small class="form-text error" *ngIf="timeremove.invalid && timeremove.touched && timeremove.errors?.required">
+                            Date Mosquito Home Remove is required!
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row" style="justify-content: center;">
+                    <div>
+                        <button [disabled]="submitted || !form.valid" nbButton status="success" [class.btn-pulse]="submitted">Create</button>
+                    </div>
+                    <div>
+                        <button nbButton status="primary" (click)="cancel()">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nb-card-body>
+</nb-card>

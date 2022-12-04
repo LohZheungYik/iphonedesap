@@ -1,0 +1,106 @@
+<ion-content style="height:50px;opacity: 0.1;position: absolute;z-index:1">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+</ion-content>
+<nb-card>
+    <nb-card-header>
+        <h2>Dengue Case Detail Information</h2>
+    </nb-card-header>
+
+    <nb-card-body>
+        <nb-tabset>
+            <nb-tab tabTitle="Dengue Case Detail" style="margin-top:16px">
+                <div class="col-md-6" style="margin: auto;">
+                    <form (ngSubmit)="submit()">
+                        <div *ngIf="showMessages.error && errors && errors.length > 0 && !submitted"
+                            class="alert alert-danger" role="alert">
+                            <div><strong>ERROR!</strong></div>
+                            <div *ngFor="let error of errors">{{ error }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="date" class="col-sm-3 col-form-label">Report Date Time</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="date" [(ngModel)]="case.date" class="form-control" id="date"
+                                    placeholder="{{case.date}}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="patient" class="col-sm-3 col-form-label">Patient Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="patient" #patient="ngModel" [(ngModel)]="case.patient"
+                                    placeholder="{{default.patient}}" class="form-control" id="patient"
+                                    [class.form-control-danger]="patient.invalid && patient.touched" autofocus
+                                    [required]="getConfigValue('forms.validation.username.required')">
+                                <small class="form-text error"
+                                    *ngIf="patient.invalid && patient.touched && patient.errors?.required">
+                                    Patient Name is required!
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="address" class="col-sm-3 col-form-label">Address</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="address" #address="ngModel" [(ngModel)]="case.address"
+                                    class="form-control" id="address" placeholder="{{default.address}}"
+                                    [class.form-control-danger]="address.invalid && address.touched"
+                                    [required]="getConfigValue('forms.validation.username.required')">
+                                <small class="form-text error"
+                                    *ngIf="address.invalid && address.touched && address.errors?.required">
+                                    Address is required!
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="ic" class="col-sm-3 col-form-label">IC No.</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="ic" #ic="ngModel" [(ngModel)]="case.ic" class="form-control"
+                                    id="ic" placeholder="{{default.ic}}" [maxlength]="12"
+                                    [class.form-control-danger]="ic.invalid && ic.touched"
+                                    [required]="getConfigValue('forms.validation.username.required')">
+                                <small class="form-text error" *ngIf="ic.invalid && ic.touched && ic.errors?.required">
+                                    IC No is required!
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="age" class="col-sm-3 col-form-label">Age</label>
+                            <div class="col-sm-9">
+                                <input type="number" name="age" #age="ngModel" [(ngModel)]="case.age"
+                                    class="form-control" id="age" [maxlength]="2" placeholder="{{default.age}}"
+                                    [class.form-control-danger]="age.invalid && age.touched"
+                                    [required]="getConfigValue('forms.validation.username.required')">
+                                <small class="form-text error"
+                                    *ngIf="age.invalid && age.touched && age.errors?.required">
+                                    Age is required!
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="infectedArea" class="col-sm-3 col-form-label">Infected Area</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="infectedArea" #infectedArea="ngModel"
+                                    [(ngModel)]="case.infectarea" class="form-control" id="infectedArea"
+                                    placeholder="{{default.infectarea}}">
+                                <small class="form-text error"
+                                    *ngIf="infectedArea.invalid && infectedArea.touched && infectedArea.errors?.required"></small>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="justify-content: center;">
+                            <div>
+                                <button [disabled]="submitted" nbButton status="success"
+                                    [class.btn-pulse]="submitted">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </nb-tab>
+            <nb-tab tabTitle="Mosquito Home Operation " style="margin-top:16px">
+                <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDeleteClick($event)"
+                    (edit)="onEditClick($event)" (create)="onCreateClick($event)">
+                </ng2-smart-table>
+            </nb-tab>
+
+        </nb-tabset>
+    </nb-card-body>
+</nb-card>

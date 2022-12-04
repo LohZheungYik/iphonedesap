@@ -1,0 +1,144 @@
+<ion-content style="height:50px;opacity: 0.1;position: absolute;z-index:1">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+</ion-content>
+<nb-card accent="info">
+  <nb-card-header>
+    <h2>User Profile</h2>
+  </nb-card-header>
+
+
+  <nb-card-body>
+
+
+    <div style="margin-left:5%;">
+      <h6>Subscribed notifications?</h6>
+      <ui-switch size='small' (change)="onChange($event)" [checked]="isSubscribed" id="customSwitch1"></ui-switch>
+
+    </div>
+
+
+    <div class="col-md-6">
+      <form (ngSubmit)="update()">
+        <div *ngIf="showMessages.error && errors && errors.length > 0 && !submitted" class="alert alert-danger"
+          role="alert">
+          <div><strong>ERROR!</strong></div>
+          <div *ngFor="let error of errors">{{ error }}</div>
+        </div>
+
+        <div class="form-group row picture-group">
+          <div class="col-sm-9">
+            <img [src]="imgURL" height="200" *ngIf="imgURL">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="image" class="col-sm-3 col-form-label">Profile Picture</label>
+          <div class="col-sm-9">
+            <input type='file' accept="image/*" (change)="onSelectFile($event)" name="image" class="" id="image">
+          </div>
+        </div>
+        <br>
+        <div class="form-group row">
+          <label for="username" class="col-sm-3 col-form-label">Username</label>
+          <div class="col-sm-9">
+            <input type="text" name="username" [(ngModel)]="user.username" class="form-control" id="username"
+              placeholder="{{user.username}}" #username="ngModel"
+              [class.form-control-danger]="username.invalid && username.touched" autofocus
+              [minlength]="getConfigValue('forms.validation.username.minlength')"
+              [required]="getConfigValue('forms.validation.username.required')">
+            <small class="form-text error" *ngIf="username.invalid && username.touched && username.errors?.required">
+              Username is required!
+            </small>
+            <small class="form-text error" *ngIf="username.invalid && username.touched && (username.errors?.minlength)">
+              Username should at least {{ getConfigValue('forms.validation.password.minLength') }} characters!
+            </small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword2" class="col-sm-3 col-form-label">Password</label>
+          <div class="col-sm-9">
+            <input type="password" name="password" [(ngModel)]="user.password" class="form-control" id="inputPassword2"
+              placeholder="{{user.password}}" #password="ngModel"
+              [class.form-control-danger]="password.invalid && password.touched"
+              [minlength]="getConfigValue('forms.validation.password.minLength')"
+              [maxlength]="getConfigValue('forms.validation.password.maxLength')">
+            <small class="form-text error" *ngIf="password.invalid && password.touched && password.errors?.required">
+              Password is required!
+            </small>
+            <small class="form-text error"
+              *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
+              Password should contains
+              from {{ getConfigValue('forms.validation.password.minLength') }}
+              to {{ getConfigValue('forms.validation.password.maxLength') }}
+              characters
+            </small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword1" class="col-sm-3 col-form-label">Confirm Password</label>
+          <div class="col-sm-9">
+            <input type="password" name="confirmPassword" [(ngModel)]="user.confirmPassword" class="form-control"
+              id="inputPassword1" placeholder="{{user.confirmPassword}}" #confirmPassword="ngModel"
+              [class.form-control-danger]="confirmPassword.invalid && confirmPassword.touched"
+              [minlength]="getConfigValue('forms.validation.password.minLength')"
+              [maxlength]="getConfigValue('forms.validation.password.maxLength')">
+            <small class="form-text error"
+              *ngIf="confirmPassword.invalid && confirmPassword.touched && confirmPassword.errors?.required">
+              Password is required!
+            </small>
+            <small class="form-text error"
+              *ngIf="confirmPassword.invalid && confirmPassword.touched && (confirmPassword.errors?.minlength || confirmPassword.errors?.maxlength)">
+              Password should contains
+              from {{ getConfigValue('forms.validation.password.minLength') }}
+              to {{ getConfigValue('forms.validation.password.maxLength') }}
+              characters
+            </small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="first" class="col-sm-3 col-form-label">First Name</label>
+          <div class="col-sm-9">
+            <input type="text" name="firstName" [(ngModel)]="user.firstName" class="form-control" id="first"
+              placeholder="{{user.firstName}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="last" class="col-sm-3 col-form-label">Last Name</label>
+          <div class="col-sm-9">
+            <input type="text" name="lastName" [(ngModel)]="user.lastName" class="form-control" id="last"
+              placeholder="{{user.lastName}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputEmail1" class="col-sm-3 col-form-label">Email</label>
+          <div class="col-sm-9">
+            <input type="email" name="email" [(ngModel)]="user.email" class="form-control" id="inputEmail1"
+              placeholder="{{user.email}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="phone" class="col-sm-3 col-form-label">Phone No</label>
+          <div class="col-sm-9">
+            <input type="text" name="phone" [(ngModel)]="user.phone" class="form-control" id="phone"
+              placeholder="{{user.phone}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="role" class="col-sm-3 col-form-label">User Role</label>
+          <div class="col-sm-9">
+            <input type="text" name="role" [(ngModel)]="user.role" class="form-control" id="role"
+              placeholder="{{user.role}}" disabled>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="offset-sm-3 col-sm-9">
+            <button [disabled]="submitted" class="btn btn-block btn-hero-success"
+              [class.btn-pulse]="submitted">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nb-card-body>
+
+</nb-card>

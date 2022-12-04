@@ -1,0 +1,27 @@
+<ion-content style="height:50px;opacity: 0.1;position: absolute;z-index:1">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+</ion-content>
+<nb-card>
+    <nb-card-header>
+        <h2>Mosquito Home Sentinel</h2>
+    </nb-card-header>
+
+    <nb-card-body>
+        <div *ngIf="showMessages.error && errors && errors.length > 0 && !submitted" class="alert alert-danger"
+            role="alert">
+            <div><strong>ERROR!</strong></div>
+            <div *ngFor="let error of errors">{{ error }}</div>
+        </div>
+        <div *ngIf="showMessages.success && messages && messages.length > 0 && !submitted" class="alert alert-success"
+            role="alert">
+            <div><strong>Hooray!</strong></div>
+            <div *ngFor="let message of messages">{{ message }}</div>
+        </div>
+
+        <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDeleteClick($event)"
+            (edit)="onEditClick($event)" (create)="onCreateClick($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

@@ -1,0 +1,23 @@
+@import '../../../../@theme/styles/themes';
+@include nb-install-component() {
+    input {
+        width: 300px;
+    }
+    .btn-success {
+        margin-left: 1rem;
+    }
+
+}
+
+.custom .ng-select-container {
+    height: 45px!important;
+    border-radius: 0!important;
+}
+
+.custom .ng-dropdown-panel {
+    opacity: 1!important;
+    border: thin black solid!important;
+    padding: 10px!important;
+    background: white!important;
+}
+

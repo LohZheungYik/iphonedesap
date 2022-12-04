@@ -1,0 +1,25 @@
+<nb-card size="large">
+  <nb-card-header>
+    <h2>QR Code Scanner</h2>
+  </nb-card-header>
+
+  <nb-card-body>
+          <!-- Shows our camera stream -->
+  <video #video [hidden]="!scanActive" width="100%"></video>
+
+  <!-- Used to render the camera stream images -->
+  <canvas #canvas hidden></canvas>
+
+  
+    <div style="    margin-bottom: 24px;text-align: center;margin-top: 35%;" (click)="startScan()">
+      <img style="width:40%;" src="assets/images/logo_aepad.jpg">
+    </div>
+    <div class="form-group row" style="justify-content: center;">
+      <div>
+        <button nbButton status="success" (click)="startScan()">Start Scanning</button>
+      </div>
+    </div>
+
+
+  </nb-card-body>
+</nb-card>

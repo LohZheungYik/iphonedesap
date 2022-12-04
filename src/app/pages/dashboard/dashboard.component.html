@@ -1,0 +1,26 @@
+<ion-content style="height:50px;opacity: 0.1;position: absolute;z-index:1">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+</ion-content>
+
+<div class="row">
+  <div class=".col-xxl-7 .col-6 .col-sm-4">
+    <ngx-simple-data></ngx-simple-data>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <ngx-total-echarts></ngx-total-echarts>
+  </div>
+  <div class="col-lg-6">
+    <ngx-index-echarts></ngx-index-echarts>
+  </div>
+  <div class="col-lg-6">
+    <ngx-house-index-echarts></ngx-house-index-echarts>
+  </div>
+  <div class="col-lg-6">
+    <ngx-larval-index-echarts></ngx-larval-index-echarts>
+  </div>
+</div>
