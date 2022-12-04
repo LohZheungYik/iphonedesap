@@ -15,15 +15,15 @@ export class UserService {
   };
 
   getUser(id): Observable<any> {
-    return this.http.get<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/user/' + id, this.httpOptions);
+    return this.http.get<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/user/' + id, this.httpOptions);
   }
 
   getAllUser(): Observable<any> {
-    return this.http.get<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/user', this.httpOptions);
+    return this.http.get<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/user', this.httpOptions);
   }
 
   updateUser(id, user, image): Observable<any> {
-    return this.http.put<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/user/' + id, {
+    return this.http.put<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/user/' + id, {
       "data": {
         "id": id,
         "username": user.username,
@@ -39,7 +39,7 @@ export class UserService {
   }
 
   updateUserAdmin(id, user): Observable<any> {
-    return this.http.put<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/user/' + id, {
+    return this.http.put<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/user/' + id, {
       "data": {
         "id": id,
         "username": user['username'],
@@ -55,7 +55,7 @@ export class UserService {
   }
 
   createUser(user): Observable<any> {
-    return this.http.post<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/auth/register', {
+    return this.http.post<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/auth/register', {
       "data": {
         "username": user['username'],
         "password": user['password'],
@@ -69,6 +69,6 @@ export class UserService {
   }
 
   deleteUser(id): Observable<any> {
-    return this.http.delete<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/user/' + id, this.httpOptions);
+    return this.http.delete<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/user/' + id, this.httpOptions);
   }
 }

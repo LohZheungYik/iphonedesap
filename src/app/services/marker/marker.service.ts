@@ -18,7 +18,7 @@ export class MarkerService {
 
   displayHistoricalMarkers(locality: string, install_date: string, collect_date: string, noDate: Boolean): Observable<any> {
 
-    return this.http.post<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/ovitrap', {
+    return this.http.post<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/ovitrap', {
       "data": {
         "filter_option": {
           "locality": locality,
@@ -32,12 +32,12 @@ export class MarkerService {
   }
 
   getLocality(): Observable<any> {
-    return this.http.get<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/ovitrap', this.httpOptions);
+    return this.http.get<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/ovitrap', this.httpOptions);
   }
 
   displayPredictionMarkers(ovitrap, noDate: Boolean): Observable<any> {
 
-    return this.http.post<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/prediction', {
+    return this.http.post<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/prediction', {
       "data": {
         "filter_option": {
           "locality": ovitrap.locality,

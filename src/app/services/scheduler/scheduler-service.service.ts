@@ -18,7 +18,7 @@ export class SchedulerService {
   };
 
   createScheduler(scheduler): Observable<any> {
-    return this.http.post<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/scheduler', {
+    return this.http.post<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/scheduler', {
       "data": {
         "name": scheduler['name'],
         "uuid": scheduler['uuid'],
@@ -29,7 +29,7 @@ export class SchedulerService {
   }
 
   updateScheduler(scheduler): Observable<any> {
-    return this.http.put<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/scheduler/' + scheduler.uuid, {
+    return this.http.put<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/scheduler/' + scheduler.uuid, {
       "data": {
         "config": scheduler['config'],
         "isTriggered": scheduler['isTriggered'],
@@ -39,11 +39,11 @@ export class SchedulerService {
   }
 
   deleteScheduler(scheduler): Observable<any> {
-    return this.http.delete<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/scheduler/' + scheduler.uuid, this.httpOptions);
+    return this.http.delete<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/scheduler/' + scheduler.uuid, this.httpOptions);
   }
 
   getSchedulerList(): Observable<any> {
-    return this.http.get<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/scheduler', this.httpOptions);
+    return this.http.get<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/scheduler', this.httpOptions);
   }
 
 }

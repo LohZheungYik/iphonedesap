@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   authenticate(username: string, password: string, rememberMe: string): Observable<any> {
-    return this.http.post<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/auth/api-key', {
+    return this.http.post<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/auth/api-key', {
       'data': {
         "username": username,
         "password": password,
@@ -68,7 +68,7 @@ export class AuthService {
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'ApiKey': this.cookieService.get('ApiKey') })
     };
-    return this.http.post<any>('http://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/auth/api-relogin', {},
+    return this.http.post<any>('https://aepad-rest-dev.ap-southeast-1.elasticbeanstalk.com/api/auth/api-relogin', {},
       this.httpOptions);
   }
 

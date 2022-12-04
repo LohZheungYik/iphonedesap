@@ -16,23 +16,23 @@ export class IndexService {
 
 
   getOvitrapIndex(locality): Observable<any> {
-    return this.http.get<any>('http://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com/api/index_calculator/oi/' + locality, this.httpOptions);
+    return this.http.get<any>('https://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com/api/index_calculator/oi/' + locality, this.httpOptions);
   }
 
   getHouseIndex(locality): Observable<any> {
-    return this.http.get<any>('http://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com/api/index_calculator/hi/' + locality, this.httpOptions);
+    return this.http.get<any>('https://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com/api/index_calculator/hi/' + locality, this.httpOptions);
   }
 
   getLarvalIndex(locality): Observable<any> {
-    return this.http.get<any>('http://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com/api/index_calculator/ld/' + locality, this.httpOptions);
+    return this.http.get<any>('https://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com/api/index_calculator/ld/' + locality, this.httpOptions);
   }
 
   getTotalPercentage(): Observable<any> {
-    return this.http.get<any>('http://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com/api/overall/total', this.httpOptions);
+    return this.http.get<any>('https://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com/api/overall/total', this.httpOptions);
   }
 
   getTotalAnalysis(): Observable<any> {
-    return this.http.get<any>('http://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com/api/overall', this.httpOptions);
+    return this.http.get<any>('https://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com/api/overall', this.httpOptions);
   }
 
 }

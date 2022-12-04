@@ -14,8 +14,8 @@ export class CupService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'ApiKey': this.authService.getToken() })
   };
 
-  // private base_url = 'http://des-rest.herokuapp.com'
-  private base_url = 'http://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com'
+  // private base_url = 'https://des-rest.herokuapp.com'
+  private base_url = 'https://des-restful-api3-dev.ap-southeast-1.elasticbeanstalk.com'
 
   getAllCup(): Observable<any> {
     return this.http.get<any>(this.base_url + '/api/cup', this.httpOptions);
